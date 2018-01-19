@@ -122,7 +122,7 @@ RSpec.describe ActiveModelAttributes do
       end
 
       it 'returns original value' do
-        expect(instance.original).to eq('original')
+        expect(instance.original).to be_nil
 
         value = Object.new
         instance.original = value
@@ -144,6 +144,22 @@ RSpec.describe ActiveModelAttributes do
       it 'assigns default value on initialize' do
         expect(instance.string).to eq('1')
         expect(instance.proc).to eq('2')
+      end
+
+      context 'overwrite default attribute' do
+        let(:klass) do
+          parent = super()
+
+          Class.new(parent) do
+            attribute :string, :string
+            attribute :proc, :string, default: '3'
+          end
+        end
+
+        it 'overwrites default attribute' do
+          expect(instance.string).to be_nil
+          expect(instance.proc).to eq('3')
+        end
       end
     end
   end

@@ -9,7 +9,10 @@ module ActiveModelAttributes
   extend ActiveSupport::Concern
   include ActiveModel::AttributeMethods
 
-  NO_DEFAULT_PROVIDED = Object.new
+  NO_DEFAULT_PROVIDED = Class.new(Object) do
+    def dup; self end
+  end.new.freeze
+
   private_constant :NO_DEFAULT_PROVIDED
 
   included do
@@ -36,8 +39,7 @@ module ActiveModelAttributes
     private
 
     def define_default_attribute(name, new_value)
-      value = new_value unless new_value == NO_DEFAULT_PROVIDED
-      self._active_model_attributes_default_attributes = _active_model_attributes_default_attributes.deep_dup.merge(name => value)
+      self._active_model_attributes_default_attributes = _active_model_attributes_default_attributes.deep_dup.merge(name => new_value)
     end
   end
 
@@ -54,16 +56,16 @@ module ActiveModelAttributes
     end
   end
 
-  def initialize_default_attribute(name, value)
-    writer = :"#{name}="
+  def initialize_default_attribute(name, default_value)
+    return if default_value == NO_DEFAULT_PROVIDED
 
-    if value == NO_DEFAULT_PROVIDED
-      public_send(writer, nil)
-    elsif value.is_a?(Proc)
-      public_send(writer, value.call)
-    else
-      public_send(writer, value)
-    end
+    value = if default_value.is_a?(Proc)
+              default_value.call
+            else
+              default_value
+            end
+
+    public_send(:"#{name}=", value)
   end
 
   def attribute(attr_name)
