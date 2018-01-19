@@ -1,7 +1,7 @@
 RSpec.describe ActiveModelAttributes do
   context '.attribute' do
     let(:date_time) do
-      if described_class::Type::IS_RAILS_5
+      if described_class::Utils.rails5?
         :datetime
       else
         :date_time
@@ -97,7 +97,7 @@ RSpec.describe ActiveModelAttributes do
 
     context 'called attribute with original type' do
       let(:type_klass) do
-        if described_class::Type::IS_RAILS_5
+        if described_class::Utils.rails5?
           Class.new(ActiveModel::Type::Value) do
             def cast(*)
               'original'

@@ -3,6 +3,7 @@ require 'active_support/core_ext/object/deep_dup'
 require 'active_model/attribute_methods'
 
 require 'active_model_attributes/version'
+require 'active_model_attributes/utils'
 require 'active_model_attributes/type'
 
 module ActiveModelAttributes
