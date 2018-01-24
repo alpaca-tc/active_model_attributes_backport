@@ -8,7 +8,6 @@ require 'active_model_attributes/type'
 
 module ActiveModelAttributes
   extend ActiveSupport::Concern
-  include ActiveModel::AttributeMethods
 
   NO_DEFAULT_PROVIDED = Class.new(Object) do
     def dup; self end
@@ -17,6 +16,8 @@ module ActiveModelAttributes
   private_constant :NO_DEFAULT_PROVIDED
 
   included do
+    include ActiveModel::AttributeMethods
+
     attribute_method_suffix '='
     class_attribute :_active_model_attributes_attribute_types, :_active_model_attributes_default_attributes, instance_accessor: false
     self._active_model_attributes_attribute_types = Hash.new(ActiveModelAttributes::Type.default_value)
