@@ -11,7 +11,7 @@ This is no longer needed on Rails5.2+.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'active_model_attributes'
+gem 'active_model_attributes_backport'
 ```
 
 ## Usage

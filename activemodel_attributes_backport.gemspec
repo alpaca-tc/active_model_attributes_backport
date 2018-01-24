@@ -5,13 +5,13 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'active_model_attributes/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'active_model_attributes'
+  spec.name          = 'active_model_attributes_backport'
   spec.version       = ActiveModelAttributes::VERSION
   spec.authors       = ['alpaca-tc']
   spec.email         = ['alpaca-tc@alpaca.tc']
 
   spec.summary       = %q{Backport ActiveModel::Attributes -like method}
-  spec.homepage      = 'https://github.com/alpaca-tc/active_model_attributes'
+  spec.homepage      = 'https://github.com/alpaca-tc/active_model_attributes_backport'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
